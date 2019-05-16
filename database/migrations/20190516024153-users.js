@@ -12,35 +12,34 @@ module.exports = {
             },
             telephone: {
                 allowNull: false,
+                unique: true,
                 type: STRING(11),
             },
             password: {
                 allowNull: false,
                 type: STRING,
             },
-            realName: {
-                allowNull: true,
+            real_name: {
                 type: STRING(30),
             },
-            nickName:  {
-                allowNull: true,
+            nick_name:  {
                 type: STRING(30),
             },
             age: {
-                allowNull: true,
                 type: STRING(3),
             },
             email: {
-                allowNull: true,
                 type: STRING(50),
             },
-            createdAt: {
+            created_at: {
                 allowNull: false,
-                type: DATE
+                type: DATE,
+                defaultValue: new Date()
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
-                type: DATE
+                type: DATE,
+                defaultValue: new Date()
             }
         })
     },

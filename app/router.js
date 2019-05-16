@@ -5,6 +5,7 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+  const url = `/api/${app.config.apiVersion}`;
 
-  router.resources('users', `/api/${app.config.apiVersion}/users`, controller.users);
+  router.resources('users', `${url}/users`, controller.users);
 };
