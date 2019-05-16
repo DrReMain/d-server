@@ -8,7 +8,7 @@ class ActionTokenService extends Service {
     return ctx.app.jwt.sign(
       {
         data: { id },
-        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7),
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24), // 默认一天
       },
       ctx.app.config.jwt.secret
     );

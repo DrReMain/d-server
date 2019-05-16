@@ -48,6 +48,7 @@ module.exports = appInfo => {
     jwt: {
       secret: 'dr.remain',
       enable: true,
+      property: 'user',
       ignore: '/',
     },
   };

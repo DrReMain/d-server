@@ -3,12 +3,13 @@
 const Service = require('egg').Service;
 
 class Users extends Service {
+
   async create(payload) {
     const { ctx, service } = this;
 
-    const user = await service.users.findByTelephone(payload.telephone);
-    if(user) {
-      ctx.throw(404, "用户已存在")
+    const user = await service.users.findByUsername(payload.username);
+    if (user) {
+      ctx.throw(404, '用户已存在');
     }
 
     payload.password = await ctx.genHash(payload.password);
@@ -16,13 +17,69 @@ class Users extends Service {
     return ctx.model.Users.create(payload);
   }
 
+  async login(payload) {
+    const { ctx, service } = this;
+    const user = await service.users.findByUsername(payload.username);
+    if (!user || user.is_delete) {
+      ctx.throw(404, '用户不存在');
+    }
+    const verifyPsw = await ctx.compare(payload.password, user.password);
+    if (!verifyPsw) {
+      ctx.throw(404, '密码不正确');
+    }
+
+    return await service.actionToken.create(user.id);
+  }
+
+  async show() {
+    const { ctx, service } = this;
+    const id = ctx.state.user.data.id;
+    const user = await service.users.find(id);
+    if (!user || user.is_delete) {
+      ctx.throw(404, '用户不存在');
+    }
+    const { username, telephone, real_name, nick_name, age, email } = user;
+    return { username, telephone, real_name, nick_name, age, email };
+  }
+
+  async update(payload) {
+    const { ctx, service } = this;
+    const id = ctx.state.user.data.id;
+    const user = await service.users.find(id);
+    if (!user || user.is_delete) {
+      ctx.throw(404, '用户不存在');
+    }
+    const verifyPsw = await ctx.compare(payload.oldpassword, user.password);
+    if (!verifyPsw) {
+      ctx.throw(404, '原密码不正确');
+    }
+    payload.newpassword = await ctx.genHash(payload.newpassword);
+    return user.update({ password: payload.newpassword });
+  }
+
+  async destroy(payload) {
+    const { ctx, service } = this;
+    const id = ctx.state.user.data.id;
+    const user = await service.users.find(id);
+    if (!user || user.is_delete) {
+      ctx.throw(404, '用户不存在');
+    }
+    const verifyPsw = await ctx.compare(payload.password, user.password);
+    if (!verifyPsw) {
+      ctx.throw(404, '密码不正确');
+    }
+    return user.update({ is_delete: true });
+  }
+
+  // --------------------------------------------------------------
+  // common
   async find(id) {
     return this.ctx.model.Users.findByPk(id);
   }
 
-  async findByTelephone(telephone) {
+  async findByUsername(username) {
     return this.ctx.model.Users.findOne({
-      where: { telephone }
+      where: { username }
     });
   }
 }
