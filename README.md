@@ -1,33 +1,25 @@
-# remain-server
+#egg-resetful-boilerplate
 
+### Features
 
+- [x] restful api
+- [x] jsonwebtoken
+- [ ] passport
+- [x] ORM based sequelize
 
-## QuickStart
+### config
 
-<!-- add docs here for user -->
+- default DB: postgresql
+- default DB username: postgres
+- default DB password: 123123
 
-see [egg docs][egg] for more detail.
-
-### Development
+### QuickStart
 
 ```bash
-$ npm i
+$ npm install
+$ npx sequelize db:create
+$ npx sequelize db:migrate
+
 $ npm run dev
-$ open http://localhost:7001/
 ```
 
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
