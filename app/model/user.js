@@ -35,8 +35,8 @@ module.exports = app => {
     },
   });
 
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = function() {
+    this.hasMany(app.model.Article);
   };
 
   return User;
