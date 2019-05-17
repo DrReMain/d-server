@@ -19,7 +19,7 @@ module.exports = {
       },
       mobile: {
         unique: true,
-        type: Sequelize.STRING(11),
+        type: Sequelize.CHAR(11),
       },
       age: {
         type: Sequelize.STRING(3),
