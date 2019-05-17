@@ -12,6 +12,11 @@ class UserService extends Service {
       ctx.throw(404, '用户已存在');
     }
 
+    const mobile = await service.user.findByMobile(payload.mobile);
+    if (mobile) {
+      ctx.throw(404, '该手机号已注册');
+    }
+
     payload.password = await ctx.genHash(payload.password);
 
     return ctx.model.User.create(payload);
@@ -28,7 +33,7 @@ class UserService extends Service {
       ctx.throw(404, '密码不正确');
     }
 
-    return await service.actionToken.create(user.id);
+    return await service.actionToken.create(user);
   }
 
   async show() {
@@ -80,6 +85,12 @@ class UserService extends Service {
   async findByUsername(username) {
     return this.ctx.model.User.findOne({
       where: { username }
+    });
+  }
+
+  async findByMobile(mobile) {
+    return this.ctx.model.User.findOne({
+      where: { mobile }
     });
   }
 }

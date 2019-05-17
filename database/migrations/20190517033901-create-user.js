@@ -22,7 +22,8 @@ module.exports = {
         type: Sequelize.CHAR(11),
       },
       age: {
-        type: Sequelize.STRING(3),
+        // type: Sequelize.STRING(3),
+        type: Sequelize.INTEGER.UNSIGNED,
       },
       email: {
         type: Sequelize.STRING(50),

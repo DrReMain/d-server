@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, BOOLEAN } = app.Sequelize;
+  const { STRING, BOOLEAN, INTEGER } = app.Sequelize;
 
   const User = app.model.define('user', {
     username: {
@@ -11,7 +11,7 @@ module.exports = app => {
     },
     password: {
       allowNull: false,
-      type: STRING,
+      type: INTEGER.UNSIGNED,
     },
     mobile: {
       unique: true,
