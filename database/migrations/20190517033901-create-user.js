@@ -21,12 +21,6 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING(11),
       },
-      real_name: {
-        type: Sequelize.STRING(30),
-      },
-      nick_name: {
-        type: Sequelize.STRING(30),
-      },
       age: {
         type: Sequelize.STRING(3),
       },

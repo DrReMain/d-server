@@ -1,5 +1,7 @@
 'use strict';
 
+const dbConf = require('../database/config');
+
 module.exports = appInfo => {
   const config = exports = {};
   config.keys = appInfo.name + 'dr.remain';
@@ -27,12 +29,7 @@ module.exports = appInfo => {
     },
 
     sequelize: {
-      dialect: 'postgres',
-      database: 'd-server-dev',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '123123',
+      ...dbConf.development,
       define: {
         freezeTableName: false,
         underscored: true,
