@@ -2,24 +2,24 @@
 
 const Service = require('egg').Service;
 
-class Users extends Service {
+class UserService extends Service {
 
   async create(payload) {
     const { ctx, service } = this;
 
-    const user = await service.users.findByUsername(payload.username);
+    const user = await service.user.findByUsername(payload.username);
     if (user) {
       ctx.throw(404, '用户已存在');
     }
 
     payload.password = await ctx.genHash(payload.password);
 
-    return ctx.model.Users.create(payload);
+    return ctx.model.User.create(payload);
   }
 
   async login(payload) {
     const { ctx, service } = this;
-    const user = await service.users.findByUsername(payload.username);
+    const user = await service.user.findByUsername(payload.username);
     if (!user || user.is_delete) {
       ctx.throw(404, '用户不存在');
     }
@@ -34,18 +34,18 @@ class Users extends Service {
   async show() {
     const { ctx, service } = this;
     const id = ctx.state.user.data.id;
-    const user = await service.users.find(id);
+    const user = await service.user.find(id);
     if (!user || user.is_delete) {
       ctx.throw(404, '用户不存在');
     }
-    const { username, telephone, real_name, nick_name, age, email } = user;
-    return { username, telephone, real_name, nick_name, age, email };
+    const { username, mobile, real_name, nick_name, age, email } = user;
+    return { username, mobile, real_name, nick_name, age, email };
   }
 
   async update(payload) {
     const { ctx, service } = this;
     const id = ctx.state.user.data.id;
-    const user = await service.users.find(id);
+    const user = await service.user.find(id);
     if (!user || user.is_delete) {
       ctx.throw(404, '用户不存在');
     }
@@ -60,7 +60,7 @@ class Users extends Service {
   async destroy(payload) {
     const { ctx, service } = this;
     const id = ctx.state.user.data.id;
-    const user = await service.users.find(id);
+    const user = await service.user.find(id);
     if (!user || user.is_delete) {
       ctx.throw(404, '用户不存在');
     }
@@ -74,14 +74,14 @@ class Users extends Service {
   // --------------------------------------------------------------
   // common
   async find(id) {
-    return this.ctx.model.Users.findByPk(id);
+    return this.ctx.model.User.findByPk(id);
   }
 
   async findByUsername(username) {
-    return this.ctx.model.Users.findOne({
+    return this.ctx.model.User.findOne({
       where: { username }
     });
   }
 }
 
-module.exports = Users;
+module.exports = UserService;

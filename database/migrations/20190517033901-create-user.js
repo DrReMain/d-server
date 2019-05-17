@@ -1,58 +1,53 @@
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, DATE, STRING, BOOLEAN } = Sequelize;
     await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: INTEGER,
+        type: Sequelize.INTEGER
       },
       username: {
         allowNull: false,
         unique: true,
-        type: STRING(20),
+        type: Sequelize.STRING(20),
       },
       password: {
         allowNull: false,
-        type: STRING,
+        type: Sequelize.STRING,
       },
-      telephone: {
+      mobile: {
         unique: true,
-        type: STRING(11),
+        type: Sequelize.STRING(11),
       },
       real_name: {
-        type: STRING(30),
+        type: Sequelize.STRING(30),
       },
       nick_name: {
-        type: STRING(30),
+        type: Sequelize.STRING(30),
       },
       age: {
-        type: STRING(3),
+        type: Sequelize.STRING(3),
       },
       email: {
-        type: STRING(50),
+        type: Sequelize.STRING(50),
       },
       is_delete: {
-        type: BOOLEAN,
+        type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
       created_at: {
         allowNull: false,
-        type: DATE,
-        defaultValue: new Date()
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: DATE,
-        defaultValue: new Date()
+        type: Sequelize.DATE
       }
     });
   },
-
-  down: async queryInterface => {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('users');
   }
 };

@@ -28,11 +28,15 @@ module.exports = appInfo => {
 
     sequelize: {
       dialect: 'postgres',
-      database: 'remain-server-dev',
+      database: 'd-server-dev',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
       password: '123123',
+      define: {
+        freezeTableName: false,
+        underscored: true,
+      },
     },
 
     multipart: {

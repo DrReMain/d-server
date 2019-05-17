@@ -8,8 +8,8 @@ class UserController extends Controller {
 
     this.UserRegisterTransfer = {
       username: { type: 'string', required: true, allowEmpty: false, min: 6, max: 20 },
-      password: { type: 'password', required: true, allowEmpty: false, min: 8, max: 30 },
-      telephone: { type: 'string', required: false, min: 11, max: 11 },
+      password: { type: 'password', required: true, allowEmpty: false, min: 6, max: 30 },
+      mobile: { type: 'string', required: false, min: 11, max: 11 },
       real_name: { type: 'string', required: false, max: 30 },
       nick_name: { type: 'string', required: false, max: 30 },
       age: { type: 'number', required: false, min: 0, max: 250 },
@@ -19,16 +19,16 @@ class UserController extends Controller {
 
     this.UserLoginTransfer = {
       username: { type: 'string', required: true, allowEmpty: false, min: 6, max: 20 },
-      password: { type: 'password', required: true, allowEmpty: false, min: 8, max: 30 },
+      password: { type: 'password', required: true, allowEmpty: false, min: 6, max: 30 },
     };
 
     this.UserDestroyTransfer = {
-      password: { type: 'password', required: true, allowEmpty: false, min: 8, max: 30 },
+      password: { type: 'password', required: true, allowEmpty: false, min: 6, max: 30 },
     };
 
     this.UserUpdateTransfer = {
-      oldpassword: { type: 'password', required: true, allowEmpty: false, min: 8, max: 30 },
-      newpassword: { type: 'password', required: true, allowEmpty: false, min: 8, max: 30 },
+      oldpassword: { type: 'password', required: true, allowEmpty: false, min: 6, max: 30 },
+      newpassword: { type: 'password', required: true, allowEmpty: false, min: 6, max: 30 },
     };
   }
 
@@ -39,7 +39,7 @@ class UserController extends Controller {
 
     const payload = ctx.request.body || {};
 
-    const data = await service.users.create(payload);
+    const data = await service.user.create(payload);
 
     ctx.helper.success({ ctx, data });
   }
@@ -49,7 +49,7 @@ class UserController extends Controller {
     const { ctx, service } = this;
     ctx.validate(this.UserLoginTransfer);
     const payload = ctx.request.body || {};
-    const data = await service.users.login(payload);
+    const data = await service.user.login(payload);
     ctx.helper.success({ ctx, data });
   }
 
@@ -57,7 +57,7 @@ class UserController extends Controller {
   // 需要 token
   async index() {
     const { ctx, service } = this;
-    const data = await service.users.show();
+    const data = await service.user.show();
     ctx.helper.success({ ctx, data });
   }
 
@@ -66,7 +66,7 @@ class UserController extends Controller {
     ctx.validate(this.UserUpdateTransfer);
     const payload = ctx.request.body || {};
 
-    const data = await service.users.update(payload);
+    const data = await service.user.update(payload);
     ctx.helper.success({ ctx, data: null });
   }
 
@@ -75,7 +75,7 @@ class UserController extends Controller {
     ctx.validate(this.UserDestroyTransfer);
     const payload = ctx.request.body || {};
 
-    const data = await service.users.destroy(payload);
+    const data = await service.user.destroy(payload);
     ctx.helper.success({ ctx, data: null });
   }
 }

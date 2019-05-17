@@ -1,15 +1,9 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
+  const { STRING, BOOLEAN } = app.Sequelize;
 
-  const Users = app.model.define('users', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: INTEGER,
-    },
+  const User = app.model.define('user', {
     username: {
       allowNull: false,
       unique: true,
@@ -19,7 +13,7 @@ module.exports = app => {
       allowNull: false,
       type: STRING,
     },
-    telephone: {
+    mobile: {
       unique: true,
       type: STRING(11),
     },
@@ -39,21 +33,11 @@ module.exports = app => {
       type: BOOLEAN,
       defaultValue: false,
     },
-    created_at: {
-      allowNull: false,
-      type: DATE,
-      defaultValue: new Date()
-    },
-    updated_at: {
-      allowNull: false,
-      type: DATE,
-      defaultValue: new Date()
-    }
   });
 
-  Users.associate = function(models) {
+  User.associate = function(models) {
     // associations can be defined here
   };
 
-  return Users;
+  return User;
 };

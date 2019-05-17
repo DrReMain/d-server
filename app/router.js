@@ -7,7 +7,7 @@ module.exports = app => {
   const { router, controller } = app;
   const url = `/api/${app.config.apiVersion}`;
 
-  router.post(`${url}/users/register`, controller.users.register);
-  router.post(`${url}/users/login`, controller.users.login);
-  router.resources('users', `${url}/users`, app.jwt, controller.users);
+  router.post(`${url}/user/register`, controller.user.register);
+  router.post(`${url}/user/login`, controller.user.login);
+  router.resources('users', `${url}/user`, app.jwt, controller.user);
 };
